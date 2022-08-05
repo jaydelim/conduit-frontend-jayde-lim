@@ -1,7 +1,5 @@
 import React from "react";
-import UserName from "./Username";
-import Email from "./Email";
-import Password from "./Password";
+import InputForm from "./Form";
 
 function SignUp() {
   return(
@@ -11,15 +9,13 @@ function SignUp() {
         <p className="text-[#5cb85c] pt-2 text-lg my-2">Have an account?</p>
       </div>
 
-      <div className= "flex items-center justify-center px-4">
+      <div className="flex items-center justify-center px-4">
         <div className="flex flex-col w-[640px] gap-y-5">
-          <UserName />
-          <Email />
-          <Password />
+          <InputForm fields={["Username","Email","Password"]} />
           <button type="button" className="bg-[#5cb85c] text-white h-16 w-36 rounded-md self-center sm:self-end text-xl">Sign Up</button>
         </div>
       </div>
-      </div>
+    </div>
   )
 }
 
