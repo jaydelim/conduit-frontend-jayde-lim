@@ -11,7 +11,9 @@ function SignUp() {
 
       <div className="flex items-center justify-center px-4">
         <div className="flex flex-col w-[640px] gap-y-5">
-          <InputForm fields={["Username","Email","Password"]} />
+          <InputForm fields={"Username"} />
+          <InputForm fields={"Email"} />
+          <InputForm fields={"Password"} />
           <button type="button" className="bg-[#5cb85c] text-white h-16 w-36 rounded-md self-center sm:self-end text-xl">Sign Up</button>
         </div>
       </div>
