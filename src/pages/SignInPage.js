@@ -2,18 +2,18 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import AuthForm from '../components/AuthForm';
 
-function SignUpPage () {
+function SignInPage () {
   return (
     <div>
       <NavBar />
       <AuthForm
-        title="Sign Up"
-        subtitle="Have an account?"
-        fields={["Username", "Email", "Password"]}
-        buttonText="Sign Up"
+        title="Sign In"
+        subtitle="Need an account?" 
+        fields={["Email", "Password"]}
+        buttonText="Sign In"
       />
     </div>
   )
 }
 
-export default SignUpPage;
+export default SignInPage;
