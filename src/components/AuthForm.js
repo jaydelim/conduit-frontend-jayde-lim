@@ -1,7 +1,47 @@
 import React from "react";
 import InputForm from "./Form";
+import {useState} from "react";
+import axios from 'axios';
+
 
 function AuthForm (props) {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const endpointApiUrl = process.env.REACT_APP_ENDPOINT_URL;
+
+  async function submitData () {
+    const data = {
+      "user": {
+      username,
+      email,
+      password
+      }
+    }
+
+    const urlForUsers = endpointApiUrl.concat("/","users")
+  
+    let register = await axios.post(urlForUsers, data)
+    let tokenInfo = sessionStorage.setItem('jwt', register.data.user.token);
+  }
+
+  function onHandleChange (data) {
+    switch (data.name) {
+      case "Username":
+        setUsername(data.value);
+        break;
+      
+      case "Email":
+        setEmail(data.value);
+        break;
+
+      case "Password":
+        setPassword(data.value);
+        break;
+    }
+  }
+
   return(
     <div>
       <div className="flex flex-col items-center justify-center py-4 pt-12">
@@ -12,12 +52,16 @@ function AuthForm (props) {
       <div className="flex items-center justify-center px-4">
         <div className="flex flex-col w-[640px] gap-y-5">
           {
-            props.fields.map(field => {
-              return <InputForm fields={field} />
+            props.fields.map((field, index) => {
+              return <InputForm 
+                        key={index}
+                        fields={field} 
+                        handleChange={onHandleChange}
+                      />
             })
           }
-          
-          <button type="button" className="bg-[#5cb85c] text-white h-16 w-36 rounded-md self-center sm:self-end text-xl">{props.buttonText}</button>
+
+          <button type="button" onClick={submitData} className="bg-[#5cb85c] text-white h-16 w-36 rounded-md self-center sm:self-end text-xl">{props.buttonText}</button>
         </div>
       </div>
     </div>
