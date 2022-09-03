@@ -20,10 +20,43 @@ function AuthForm (props) {
       }
     }
 
-    const urlForUsers = endpointApiUrl.concat("/","users")
+    const urlForUsers = `${endpointApiUrl}/users`
+
+    try {
+      let register = await axios.post(urlForUsers, data)
+      sessionStorage.setItem('jwt', register.data.user.token);
+    } catch(error) {
+    if (error.response) {
+      console.log(`Server responded with some error msg. UI for the users might need to be created.`)
+    } else if (error.request) {
+     console.log(`Request was successful but no response. UI for the users might need to be created.`)
+    } else {
+      console.log(error)
+      }
+    }
+  }
+
+  async function submitSignInData() {
+    const data = {
+      "user": {
+      email,
+      password
+      }
+    }
+    const urlForLogIn = `${endpointApiUrl}/users/login`
   
-    let register = await axios.post(urlForUsers, data)
-    let tokenInfo = sessionStorage.setItem('jwt', register.data.user.token);
+    try {
+      let authentication = await axios.post(urlForLogIn, data)
+      sessionStorage.setItem('jwt', authentication.data.user.token);
+    } catch(error) {
+      if (error.response) {
+        console.log(`Server responded with some error msg. UI for the users might need to be created.`)
+      } else if (error.request) {
+        console.log(`Request was successful but no response. UI for the users might need to be created.`)
+      } else {
+        console.log(error)
+      }
+    }
   }
 
   function onHandleChange (data) {
@@ -39,6 +72,9 @@ function AuthForm (props) {
       case "Password":
         setPassword(data.value);
         break;
+
+      default:
+        throw new Error("please check handle change data. This data name is not supported by the AuthForm")
     }
   }
 
@@ -61,7 +97,7 @@ function AuthForm (props) {
             })
           }
 
-          <button type="button" onClick={submitData} className="bg-[#5cb85c] text-white h-16 w-36 rounded-md self-center sm:self-end text-xl">{props.buttonText}</button>
+          <button type="button" onClick={props.buttonText === "Sign In"? submitSignInData : submitData} className="bg-[#5cb85c] text-white h-16 w-36 rounded-md self-center sm:self-end text-xl">{props.buttonText}</button>
         </div>
       </div>
     </div>
